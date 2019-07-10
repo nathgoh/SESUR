@@ -1,7 +1,5 @@
-
 # /----------------------------------------------------------------------------#
-#/    Get other plotting obj
-
+#/    REad in libraries
 library(raster)
 library(dplyr)
 library(tidyr)
@@ -19,17 +17,21 @@ coastsCoarse_df <- arrange(coastsCoarse_df, id)
 # /----------------------------------------------------------------------------#
 #/    Get predicted flux grid
 # REPLACE THESE GRIDS WITH BIOCLIMATIC VARIABLES
+# File format glossary:  brick and stack  are piles of grids (also known as raster).
+#                        .nc  is a NetCDF
 
 flux <- brick('../output/results/grid/upch4_med_nmolm2sec.nc')# , varname="upch4")
 # replace negative (sink) values
 flux[flux < 0] = NA
 
-# Get date list
+# Get date list (RDS is a R data structure).
+# Change this to another format; because RDS is bad.
 parseddates <- readRDS('../output/results/parsed_dates.rds')
 
 
 # /----------------------------------------------------------------------------#
 #/     Get tower locations                                               -------
+#  CRS is a Coordinate system; that's an attribute of spatial data.
 
 bams_towers <- read.csv("../Grid Extraction/Towers/BAMS_site_coordinates.csv")
 xy <- bams_towers[,c(3,4)]
@@ -47,10 +49,9 @@ flux_df <- as.data.frame(flux_df)
 names(flux_df) <- c("layer", "x", "y")
 
 
-
-# Make plot object 
+# /----------------------------------------------------------------------------#
+#/    Make a map of tower over background of bioclimatic grids             ----
 ggplot() +
-  
   
   # Flux grid
   geom_tile(data=flux_df, aes(x=x, y=y, fill=layer)) +
