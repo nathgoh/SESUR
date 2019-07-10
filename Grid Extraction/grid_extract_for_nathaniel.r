@@ -81,8 +81,6 @@ ggplot() +
          plot.margin = unit( c(-2, -3, -2, -3) , "mm"))
 
 
-
-# Extract values of grids
-e <- as.data.frame(extract(flux, xy)) 
-#e <- bind_cols(e, bams_towers)
-
+# /-------------------------------------
+#/  Extract values of grids
+v <- value(flux) 
