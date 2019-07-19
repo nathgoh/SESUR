@@ -59,4 +59,14 @@ ggplot() +
   stat_bin(data=towers_coords_df, aes(x=LST_Day, y=cumsum(..count..)/nrow(towers_coords_df)), color='red', bins=20, geom="step")+
   stat_bin(data=lst_day_subset_df, aes(x=lst_day, y=cumsum(..count..)/nrow(lst_day_subset_df)), color='blue', bins=20, geom="step")
 
+#========================================================================================
+
+#KS Test
+ks.test(towers_coords_df$LST_Day, lst_day_subset_df$lst_day, "pnorm")
+
+# KS Visual Plot
+sample1 <- towers_coords_df
+sample2 <- lst_day_subset_df
+group <- c(rep("sample1", length(sample1)), rep("sample2", length(sample2)))
+data <- data.frame(values = c(sample1, sample2), group = group)
 
