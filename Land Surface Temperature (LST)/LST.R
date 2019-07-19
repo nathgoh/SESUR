@@ -64,9 +64,4 @@ ggplot() +
 #KS Test
 ks.test(towers_coords_df$LST_Day, lst_day_subset_df$lst_day, "pnorm")
 
-# KS Visual Plot
-sample1 <- towers_coords_df
-sample2 <- lst_day_subset_df
-group <- c(rep("sample1", length(sample1)), rep("sample2", length(sample2)))
-data <- data.frame(values = c(sample1, sample2), group = group)
 
