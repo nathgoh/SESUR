@@ -5,59 +5,58 @@ library(raster)
 library(here)
 here()
 
+#========================================================================================
 
-
-# ======================================================================================
 # Read in RDS stack data
 lst_day <- readRDS("../Land Surface Temperature (LST)/Data/LST_Day_CMG_stack.rds")
 lst_night <- readRDS("../Land Surface Temperature (LST)/Data/LST_Night_CMG_stack.rds")
 
 # Get a subset of the RDS stack data
-lst_day <- lst_day[[1]]
-lst_night <- lst_night[[1]]
+lst_day_subset <- lst_day[[1]]
+lst_night_subset <- lst_night[[1]]
 
-# Reformat data for use in ggplot
-lst_day_df <- as.data.frame( as(lst_day, "SpatialPixelsDataFrame") )
-names(lst_day_df) <- c("LST_day", "Longitutde", "Latitude")
+# Reformat the rasters so for use with ggplot
+lst_day_subset_df <- as.data.frame(as(lst_day_subset, "SpatialPixelsDataFrame"))
+names(lst_day_subset_df) <- c("lst_day", "long", "lat")
 
+#========================================================================================
 
-
-# ======================================================================================
 # Read tower data
-towers <- read.csv("../Grid Extraction/Towers/BAMS_site_coordinates.csv")
+flux_towers <- read.csv("../Grid Extraction/Towers/BAMS_site_coordinates.csv")
 
-# Get tower coordinates 
-towers_coords <- cbind(towers$Longitude, towers$Latitude)
+# Get coordinates from the tower data
+coords <- cbind(flux_towers$Latitude, flux_towers$Longitude)
 
-# Turn into spatial object 
-towers_points <- SpatialPointsDataFrame(towers_coords, towers)
-towers_points_df <- data.frame(towers_points)
+# Make spatial objects
+towers_coords <- SpatialPointsDataFrame(coords, flux_towers)
+towers_coords_df <- data.frame(towers_coords)
 
 # Extract pixel values at towers
-towers_points_df$LST_Day <- raster::extract(lst_day, towers_points)
+towers_coords_df$LST_Day <- raster::extract(lst_day_subset, towers_coords)
 
+#========================================================================================
 
-
-# ======================================================================================
-# Map towers over the LST
+# Map towers
 ggplot() +
-  geom_tile(data = lst_day_df, aes(x = Longitutde, y = Latitude, fill = LST_day)) +
-  geom_point(data = towers_points_df, aes(x = Longitude, y = Latitude), color = 'yellow')
+  geom_tile(data = lst_day_subset_df, aes(x = long, y = lat, fill = lst_day)) +
+  geom_point(data = towers_coords_df, aes(x = Longitude, y = Latitude, color = "yellow"))
 
-# Plot histogram
+#========================================================================================
+
+# Draw histogram
 ggplot() +
-  geom_histogram(data = lst_day_df, aes(x = LST_day), binwidth = 5) +
-  xlab("LST Daytime (Deg Celcius)") +
-  ggtitle("Distribution of Pixels of LST Daytime")
+  geom_histogram(data = lst_day_subset_df, aes(x = lst_day), binwidth = 5) +
+  xlab("LST Daytime (Celcius)") +
+  ggtitle("Distribution of pixels of LST Daytime")
 
-# Save histogram 
 ggsave("../Land Surface Temperature (LST)/Output/histogram_LST_daytime.jpeg",
-       width=140, height=90, dpi=400, units="mm")
+       width = 140, height = 90, dpi = 400, units = "mm")
+
+#========================================================================================
 
 # Cumulative plot
 ggplot() +
-  stat_bin(data=towers_points_df, aes(x=LST_Day, y=cumsum(..count..)/nrow(towers_points_df)), color='red', bins=20, geom="step")+
-  stat_bin(data=lst_day_df, aes(x=LST_day, y=cumsum(..count..)/nrow(lst_day_df)), color='blue', bins=20, geom="step")+
+  stat_bin(data=towers_coords_df, aes(x=LST_Day, y=cumsum(..count..)/nrow(towers_coords_df)), color='red', bins=20, geom="step")+
+  stat_bin(data=lst_day_subset_df, aes(x=lst_day, y=cumsum(..count..)/nrow(lst_day_subset_df)), color='blue', bins=20, geom="step")
 
-dev.off()
 
