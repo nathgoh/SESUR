@@ -11,8 +11,8 @@ here()
 
 #===============================================================================
 # Open the RDS stacks
-lst_day <- readRDS("../data/modis_processed/LST_Day_CMG_stack.rds")
-lst_night <- readRDS("../data/modis_processed/LST_Day_CMG_stack.rds")
+lst_day <- readRDS("../Land Surface Temperature (LST)/Data/LST_Day_CMG_stack.rds")
+lst_night <- readRDS("../Land Surface Temperature (LST)/Data/LST_Night_CMG_stack.rds")
 
 
 
@@ -32,7 +32,7 @@ names(lst_day_df) <- c("layer", "x", "y")
 #===============================================================================
 
 # Read in towers
-towers <- read.csv("../data/towers/BAMS_site_coordinates.csv")
+towers <- read.csv("../Grid Extraction/Towers/BAMS_site_coordinates.csv")
 
 # get coordinates
 pts_coords <- cbind(towers$Longitude, towers$Latitude)
@@ -67,6 +67,6 @@ ggplot() +
 
 
 
-ggsave("../output/figures/histo_lst_daytime.png",
-       width=140, height=90, dpi=400, units="mm")
+#ggsave("../output/figures/histo_lst_daytime.png",
+#       width=140, height=90, dpi=400, units="mm")
 dev.off()
