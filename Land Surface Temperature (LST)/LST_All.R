@@ -7,22 +7,29 @@ here()
 
 #========================================================================================
 
-# Read in RDS stack data
-lst_day <- readRDS("../Land Surface Temperature (LST)/Data/LST_Day_CMG_stack.rds")
-lst_night <- readRDS("../Land Surface Temperature (LST)/Data/LST_Night_CMG_stack.rds")
+# Function to read and prepare the LST data 
+read_lst_data <- function(x) {
+  
+  # Read in RDS stack data
+  lst <- readRDS(x)
+  
+  # Get the mean of the RDS raster data, one layer
+  lst <- mean(lst, na.rm = TRUE)
+  
+  # Crop out Antartica, not relevant to the research
+  area_of_interest = extent(c(xmin = -180, xmax = 180, ymin = -58, ymax = 90))
+  lst <- crop(lst, area_of_interest)
+  
+  return(lst)
+}
 
-# Get a subset of the RDS raster data, one layer
-lst_day <- mean(lst_day, na.rm = TRUE)
-lst_night <- mean(lst_night, na.rm = TRUE)
-
-area_of_interest = extent(c(xmin = -180, xmax = 180, ymin = -58, ymax = 90))
-lst_night <- crop(lst_night, area_of_interest)
-lst_day <- crop(lst_day, area_of_interest)
+# Get the RDS data
+lst_day <- read_lst_data("../Land Surface Temperature (LST)/Data/LST_Day_CMG_stack.rds")
+lst_night <- read_lst_data("../Land Surface Temperature (LST)/Data/LST_Night_CMG_stack.rds")
 
 # Stack the lst_day and lst_night
 lst = stack(lst_day, lst_night)
 names(lst) <- c("lst_day", "lst_night")
-
 
 # Reformat the rasters so for use with ggplot
 lst_df <- as.data.frame(as(lst, "SpatialPixelsDataFrame"))
@@ -30,29 +37,64 @@ names(lst_df) <- c("lst_day", "lst_night", "long", "lat")
 
 #========================================================================================
 
-# Read tower data
-flux_towers <- read.csv("../Grid Extraction/Towers/BAMS_site_coordinates.csv")
-
-# Get coordinates from the tower data
-coords <- cbind(flux_towers$Longitude, flux_towers$Latitude)
-
-# Make spatial objects
-towers_coords <- SpatialPointsDataFrame(coords, flux_towers)
-towers_coords_df <- data.frame(towers_coords)
-
-# Extract pixel values at towers
-towers_coords_df<- cbind(towers_coords_df, raster::extract(lst, towers_coords))
+# # Read in RDS stack data
+# lst_day <- readRDS("../Land Surface Temperature (LST)/Data/LST_Day_CMG_stack.rds")
+# lst_night <- readRDS("../Land Surface Temperature (LST)/Data/LST_Night_CMG_stack.rds")
+# 
+# # Get the mean of the RDS raster data, one layer
+# lst_day <- mean(lst_day, na.rm = TRUE)
+# lst_night <- mean(lst_night, na.rm = TRUE)
+# 
+# # Crop out Antartica, not relevant to the research
+# area_of_interest = extent(c(xmin = -180, xmax = 180, ymin = -58, ymax = 90))
+# lst_night <- crop(lst_night, area_of_interest)
+# lst_day <- crop(lst_day, area_of_interest)
+# 
+# # Stack the lst_day and lst_night
+# lst = stack(lst_day, lst_night)
+# names(lst) <- c("lst_day", "lst_night")
+# 
+# 
+# # Reformat the rasters so for use with ggplot
+# lst_df <- as.data.frame(as(lst, "SpatialPixelsDataFrame"))
+# names(lst_df) <- c("lst_day", "lst_night", "long", "lat")
 
 #========================================================================================
 
-# Draw histogram
-#ggplot() +
-#  geom_histogram(data = lst_day_subset_df, aes(x = lst_day), binwidth = 5) +
-#  xlab("LST Daytime (Celcius)") +
-#  ggtitle("Distribution of pixels of LST Daytime")
-#
-#ggsave("../Land Surface Temperature (LST)/Output/histogram_LST_daytime.jpeg",
-#       width = 140, height = 90, dpi = 400, units = "mm")
+
+# Function to read tower data and get the coordinates from the data
+read_tower_data <- function(x) {
+  
+  # Read tower data
+  flux_towers <<- read.csv(x)
+  
+  # Get coordinates from the tower data
+  coords <<- cbind(flux_towers$Longitude, flux_towers$Latitude)
+  
+  # Make spatial objects
+  towers_coords <<- SpatialPointsDataFrame(coords, flux_towers)
+  towers_coords_df <<- data.frame(towers_coords)
+  
+  # Extract pixel values at towers
+  towers_coords_df <<- cbind(towers_coords_df, raster::extract(lst, towers_coords))
+  
+}
+
+# Name of the tower data file
+towers <- "../Grid Extraction/Towers/BAMS_site_coordinates.csv"
+
+read_tower_data(towers)
+
+#========================================================================================
+
+# # Draw histogram
+# ggplot() +
+#   geom_histogram(data = lst_day_subset_df, aes(x = lst_day), binwidth = 5) +
+#   xlab("LST Daytime (Celcius)") +
+#   ggtitle("Distribution of pixels of LST Daytime")
+# 
+# ggsave("../Land Surface Temperature (LST)/Output/histogram_LST_daytime.jpeg",
+#        width = 140, height = 90, dpi = 400, units = "mm")
 
 #========================================================================================
 
@@ -64,8 +106,8 @@ ggplot() +
   ggtitle("Distribution of pixels of LST Daytime")
 
 ggplot() +
-  stat_bin(data=towers_coords_df, aes(x=lst_night, y=cumsum(..count..)/nrow(towers_coords_df)), color='red', bins=20, geom="step")+
-  stat_bin(data=lst_df, aes(x=lst_night, y=cumsum(..count..)/nrow(lst_df)), color='blue', bins=20, geom="step") +
+  stat_bin(data = towers_coords_df, aes(x = lst_night, y=cumsum(..count..)/nrow(towers_coords_df)), color='red', bins=20, geom="step")+
+  stat_bin(data = lst_df, aes(x = lst_night, y = cumsum(..count..)/nrow(lst_df)), color='blue', bins=20, geom="step") +
   xlab("LST Nighttime (Celcius)") +
   ggtitle("Distribution of pixels of LST Nighttime")
 
@@ -107,6 +149,7 @@ ggplot() +
   geom_tile(data = lst_df, aes(x = long, y = lat, fill = as.factor(closest_tower))) +
   geom_text(data = towers_coords_df, aes(x = Longitude, y = Latitude, label = ID)) +
   geom_point(data = towers_coords_df, aes(x = Longitude, y = Latitude), color = "yellow") 
+
 
 # Histogram
 ggplot() +
