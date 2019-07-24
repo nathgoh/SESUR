@@ -10,9 +10,9 @@ here()
 
 #========================================================================================
 
-bioclim_list <- list.files(path = "./Bioclimatic Data", full.names = TRUE, pattern = ".tif")
+bioclim_list <- list.files(path = "./Data/Bioclimatic", full.names = TRUE, pattern = ".tif")
 
-bioclim_stack <- raster::stack(bioclim_list, )
+bioclim_stack <- raster::stack(bioclim_list)
 
 # Crop out Antartica, not relevant to the research
 area_of_interest = extent(c(xmin = -180, xmax = 180, ymin = -58, ymax = 90))
@@ -42,7 +42,7 @@ read_tower_data <- function(x) {
 }
 
 # Name of the tower data file
-towers <- "./Old/Grid Extraction/Towers/BAMS_site_coordinates.csv"
+towers <- "./Data/Towers/BAMS_site_coordinates.csv"
 
 read_tower_data(towers)
 
