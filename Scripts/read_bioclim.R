@@ -4,14 +4,16 @@ library(tidyr)
 library(raster)
 library(raster)
 library(rgdal)
-
+library(proxy)
 library(here)
 here()
 
 #========================================================================================
 
+# Get the list of bioclimatic variables
 bioclim_list <- list.files(path = "./Data/Bioclimatic", full.names = TRUE, pattern = ".tif")
 
+# Put into a stack
 bioclim_stack <- raster::stack(bioclim_list)
 
 # Crop out Antartica, not relevant to the research
@@ -48,27 +50,19 @@ read_tower_data(towers)
 
 #========================================================================================
 
-# Random sampling
-bioclim_stack <- bioclim_stack(sample(nrow(bioclim_stack), 250))
+# Random sampling to use less computation power
+bioclim_stack_df <- bioclim_stack_df[sample(nrow(bioclim_stack_df), 300000), ]
 
 # Convert bioclimatic stack data from wide format to long format
 # Purpose of this is to plot
 bioclim_stack_df2 <- bioclim_stack_df %>%
   gather(key = bioclim_var, value = value, wc2.0_bio_5m_01:wc2.0_bio_5m_11)
 
+# Convert towers stack data from wide format to long format
 towers_coords_df2 <- towers_coords_df %>%
   gather(key = bioclim_var, value = value, wc2.0_bio_5m_01:wc2.0_bio_5m_11)
   
 #========================================================================================
-
-# Function to draw cumulative plot
-# cumulative <- function(towers, plot_df, plot_data) {
-#   cumulative_plot <- ggplot() +
-#     stat_bin(data = towers, aes_string(x = plot_data, y = cumsum(..count..) / nrow(towers)), color = 'red', bins = 20, geom = "step") +
-#     stat_bin(data = plot_df, aes_string(x = plot_data, y = cumsum(..count..) / nrow(plot_df)), color = 'blue', bins = 20, geom = "step")
-#   
-#   return(cumulative_plot)
-# }
 
 # Function to draw cumulative plot
 cumulative <- function(towers, plot_df, plot_data) {
@@ -82,73 +76,66 @@ cumulative <- function(towers, plot_df, plot_data) {
 }
 
 
-# LST Daytime
-cumulative_daytime <- cumulative(towers_coords_df2, bioclim_stack_df2, "value")
-cumulative_daytime
-
-# LST Nighttime
-cumulative_nighttime <- cumulative(towers_coords_df, lst_df, lst_night)
-cumulative_nighttime
-
-# # Cumulative plot
-# ggplot() +
-#   stat_bin(data=towers_coords_df, aes(x=lst_day, y=cumsum(..count..)/nrow(towers_coords_df)), color='red', bins=20, geom="step")+
-#   stat_bin(data=lst_df, aes(x=lst_day, y=cumsum(..count..)/nrow(lst_df)), color='blue', bins=20, geom="step") +
-#   xlab("LST Daytime (Celcius)") +
-#   ggtitle("Distribution of pixels of LST Daytime")
-# 
-# ggplot() +
-#   stat_bin(data = towers_coords_df, aes(x = lst_night, y=cumsum(..count..)/nrow(towers_coords_df)), color='red', bins=20, geom="step")+
-#   stat_bin(data = lst_df, aes(x = lst_night, y = cumsum(..count..)/nrow(lst_df)), color='blue', bins=20, geom="step") +
-#   xlab("LST Nighttime (Celcius)") +
-#   ggtitle("Distribution of pixels of LST Nighttime")
+# Bioclimatic variables
+cumulative_bioclim <- cumulative(towers_coords_df2, bioclim_stack_df2, "value")
+cumulative_bioclim
 
 #========================================================================================
 
-#KS Test
-ks.test(towers_coords_df$lst_day, lst_df$lst_day, "pnorm")
-ks.test(towers_coords_df$lst_night, lst_df$lst_night, "pnorm")
+# Calculate eucledian distance to all other pixels of all the bioclimatic variables for each tower
+distance <- proxy::dist(x = bioclim_stack_df[c(1:5)], y = towers_coords_df[c(8:12)], method = "Euclidean",
+                      diag = FALSE, upper = FALSE)
 
-#========================================================================================d
-  
-# Loop through individual towers
-for (j in 1:nrow(towers_coords_df)) {
-  
-  # Select a tower
-  tower <- towers_coords_df[j,]
-  
-  # Calculate eucledian distance to all other pixels for each tower
-  dist <- data.frame(((lst_df$lst_day - tower$lst_day)^2 + (lst_df$lst_night - tower$lst_night)^2)^(1/2))
-  names(dist) <- tower$ID
-  
-  # Append distance column to data frame
-  lst_df <- cbind(lst_df, dist)
-  
-}
+# Reformat to be usable for analysis
+distance <- as.data.frame(as.matrix.data.frame(distance))
+names(distance) <- towers_coords$ID
+bioclim_stack_df_wdist <- cbind(bioclim_stack_df, distance)
+
 
 #========================================================================================
 
-# Find the minimum distance in terms of LST at each pixel on earth from the network of towers
-lst_df$min_dist <- apply(lst_df[,5:54], MARGIN = 1, FUN = min, na.rm = TRUE)
+# Find the minimum distance in terms of the bioclimatic variables at each pixel on Earth from the network of towers
+bioclim_stack_df_wdist$min_dist <- apply(bioclim_stack_df_wdist[, 8:57], MARGIN = 1, FUN = min, na.rm = TRUE)
 
-# Find the tower ID that has the minimum distance
-lst_df$closest_tower <- as.character(c(apply(lst_df[,5:54], MARGIN = 1, FUN = which.min)))
+# Find the tower that has the minimum distance
+bioclim_stack_df_wdist$closest_tower <- c(apply(bioclim_stack_df_wdist[, 8:57], MARGIN = 1, FUN = which.min))
+
+# Convert numeric to tower ID
+bioclim_stack_df_wdist$closest_tower <- colnames(bioclim_stack_df_wdist[, 8:57])[bioclim_stack_df_wdist$closest_tower]
 
 #========================================================================================
 
-# Map towers over the LST
+# Map towers over the bioclimatic variables
 ggplot() +
-  geom_tile(data = lst_df, aes(x = long, y = lat, fill = as.factor(closest_tower))) +
-  geom_text(data = towers_coords_df, aes(x = Longitude, y = Latitude, label = ID)) +
-  geom_point(data = towers_coords_df, aes(x = Longitude, y = Latitude), color = "yellow") 
+  geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = as.factor(closest_tower))) +
+  geom_text(data = towers_coords_df, aes(x = Longitude, y = Latitude + 2, label = ID)) +
+  geom_point(data = towers_coords_df, aes(x = Longitude, y = Latitude), shape = 21, size = 2, stroke = 1.1, color = "black")
 
 
 # Histogram
 ggplot() +
-  geom_histogram(data = lst_df, aes(x = closest_tower, fill = closest_tower), stat= "count") +
+  geom_histogram(data = bioclim_stack_df_wdist, aes(x = closest_tower, fill = closest_tower), stat= "count") +
   coord_flip()
-  
 
+#========================================================================================
+
+# Order the histogram
+bioclim_stack_df_wdist_summarized <- bioclim_stack_df_wdist %>%
+                                      group_by(closest_tower) %>%
+                                        summarise(count = n()) %>%
+                                          arrange(count)
+
+# Factor 
+bioclim_stack_df_wdist$closest_tower <- factor(bioclim_stack_df_wdist$closest_tower, levels = bioclim_stack_df_wdist_summarized$closest_tower)
+
+# Histogram
+ggplot() +
+  geom_histogram(data = bioclim_stack_df_wdist, aes(x = closest_tower, fill = closest_tower), stat = "count") +
+  coord_flip() +
+  theme(legend.position = "none") +
+  xlab("Closest Tower") +
+  ylab("Number of Pixels")
+  
 
 
 
