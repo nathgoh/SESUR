@@ -1,0 +1,12 @@
+#===========================================================================================
+
+# Function to draw cumulative plot
+cumulative <- function(towers, plot_df, plot_data) {
+  cumulative_plot <- ggplot() +
+    stat_ecdf(data = towers, aes_string(x = plot_data), color = 'red', geom = "step") +
+    stat_ecdf(data = plot_df, aes_string(x = plot_data), color = 'blue', geom = "step") +
+    xlab("") + ylab("Cumulative Frequency") +
+    facet_wrap(~bioclim_var)
+  
+  return(cumulative_plot)
+}
