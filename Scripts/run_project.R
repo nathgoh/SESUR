@@ -15,7 +15,7 @@ source('./Scripts/read_bioclim.R')
 source('./Scripts/cumulative_plot.R')
 
 # Do representativeness analyses like eucledian distance
-source('./Scripts/cumulative_plot.R')
+source('./Scripts/representativeness.R')
 
 # Plot our analysis of the representativeness analyses
 source('./Scripts/plot.R')

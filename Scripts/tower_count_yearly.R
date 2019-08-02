@@ -65,12 +65,28 @@ names(output_biome) <- c('SITE_ID', 'YEAR', 'BIOME')
 
 # Get tower count per year
 tower_count_yearly_biome <- output_biome %>%
-  group_by(YEAR, BIOME) %>%
+    group_by(YEAR, BIOME) %>%
       summarise(n = n())
+
+#===========================================================================
+
+gap_fill <- expand.grid(YEAR = tower_count_yearly_biome$YEAR, BIOME = tower_count_yearly_biome$BIOME)
+
+# Fill in the missing tower count for a certain year in a certain biome
+tower_count_yearly_biome <- full_join(tower_count_yearly_biome, gap_fill, by = c('YEAR' = 'YEAR', 'BIOME' = 'BIOME')) %>%
+  mutate(n = ifelse(is.na(n), 0, n)) %>%
+    arrange(YEAR, BIOME) %>%
+      group_by(YEAR, BIOME) %>%
+        summarise(n = max(n))
+
+#==========================================================================
 
 # Graph the lineplot for visual representation of tower network over time
 plot_tower_count_biome <- ggplot(tower_count_yearly_biome) +
-  geom_line(aes(x = YEAR, y = n, group = BIOME, color = BIOME)) +
-  geom_point(aes(x = YEAR, y = n), size = 1, color = "black") +
+  geom_area(aes(x = YEAR, y = n, fill = BIOME), position = 'stack') +
   ylab("Number of towers") +
-  xlab("Year")
+  xlab("Year") +
+  scale_x_continuous(expand = c(0,0), breaks = seq(min(tower_count_yearly_biome$YEAR), max(tower_count_yearly_biome$YEAR), 5)) +
+  scale_y_continuous(expand = c(0,0))
+  
+  

@@ -16,19 +16,3 @@ towers <- towers %>%
 towers <- towers[, 1:10]
 
 #===================================================================================================
-
-# Fw = fraction wetland, max is that  
-Fw_max <- raster('./Data/Wetland Map/Fw_max.tif')
-Fw_max[Fw_max < 0.01] <- NA
-
-bioclim_stack <- mask(bioclim_stack, Fw_max)
-
-# Crop out Antartica, not relevant to the research
-area_of_interest = extent(c(xmin = -180, xmax = 180, ymin = -58, ymax = 90))
-bioclim_stack <- crop(bioclim_stack, area_of_interest)
-
-bioclim_stack_df <- as.data.frame(as(bioclim_stack, "SpatialPixelsDataFrame")) 
-
-#====================================================================================================
- 
-
