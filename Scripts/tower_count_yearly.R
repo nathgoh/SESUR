@@ -1,4 +1,4 @@
-#============================================================================
+#===================================================================================================
 
 # Empty data frame
 output <- data.frame()
@@ -34,7 +34,7 @@ plot_tower_count <- ggplot(tower_count_yearly) +
   ylab("Number of towers") +
   xlab("Year")
 
-#===========================================================================
+#===================================================================================================
 
 output_biome <- data.frame()
 
@@ -68,7 +68,7 @@ tower_count_yearly_biome <- output_biome %>%
     group_by(YEAR, BIOME) %>%
       summarise(n = n())
 
-#===========================================================================
+#===================================================================================================
 
 gap_fill <- expand.grid(YEAR = tower_count_yearly_biome$YEAR, BIOME = tower_count_yearly_biome$BIOME)
 
@@ -79,7 +79,7 @@ tower_count_yearly_biome <- full_join(tower_count_yearly_biome, gap_fill, by = c
       group_by(YEAR, BIOME) %>%
         summarise(n = max(n))
 
-#==========================================================================
+#===================================================================================================
 
 # Graph the lineplot for visual representation of tower network over time
 plot_tower_count_biome <- ggplot(tower_count_yearly_biome) +

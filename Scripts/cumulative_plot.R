@@ -1,4 +1,4 @@
-#===========================================================================================
+#=====================================================================================================
 
 # Function to draw cumulative plot
 cumulative <- function(towers, plot_df, plot_data) {
@@ -10,3 +10,5 @@ cumulative <- function(towers, plot_df, plot_data) {
   
   return(cumulative_plot)
 }
+
+cumulative_plot <- cumulative(towers_coords_df2, bioclim_stack_df2, "value")

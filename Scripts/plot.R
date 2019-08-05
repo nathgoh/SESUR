@@ -1,4 +1,4 @@
-#==========================================================================================
+#=====================================================================================================
 
 # Map towers over the bioclimatic variables
 map_towers <- ggplot() +
@@ -19,11 +19,11 @@ min_distances <- ggplot() +
   geom_point(data = towers_coords_df, aes(x = LOCATION_LONG, y = LOCATION_LAT), shape = 21, size = 2, stroke = 1.1, color = "black")
 
 # Histogram
-hist <- ggplot() +
+unordered_hist <- ggplot() +
   geom_histogram(data = bioclim_stack_df_wdist, aes(x = closest_tower, fill = closest_tower), stat= "count") +
   coord_flip()
 
-#===========================================================================================
+#=====================================================================================================
 
 # Order the histogram
 bioclim_stack_df_wdist_summarized <- bioclim_stack_df_wdist %>%
