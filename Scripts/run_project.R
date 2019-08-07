@@ -27,4 +27,16 @@ source('./Scripts/tower_count_yearly.R')
 #=====================================================================================================
 
 # Notes:
-# Wetland percantage -> use alpha to give a visual representation of the wetlands
+
+  # Wetland percantage -> use alpha to give a visual representation of the wetlands
+  
+  # Make a loop to save the KS-test scores
+  
+  # Uniqueness of towers within the network:
+      # Run the distance algorithm for tower-to-tower of the ones currently in the network 
+      # (instead of tower to pixel). This would give us a uniqueness score of our current towers.
+      # Run the distance algorithm for current network towers to new towers. 
+      # This would give use a priority among new towers.
+  
+  # Calculate the distance (average or total) for the world when 
+  # calculated from our current network, vs all potential tower.
