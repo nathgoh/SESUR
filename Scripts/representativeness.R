@@ -11,8 +11,9 @@ Fw_max <- crop(Fw_max, area_of_interest)
 
 # Create mask
 bioclim_stack <- mask(bioclim_stack, Fw_max)
-
-bioclim_stack_df <- as.data.frame(as(bioclim_stack, "SpatialPixelsDataFrame")) 
+# bioclim_stack <- stack(Fw_max)
+bioclim_stack_df <- as.data.frame(as(bioclim_stack, "SpatialPixelsDataFrame"))
+Fw_max_df <- as.data.frame(as(Fw_max, "SpatialPixelsDataFrame"))
 
 #===================================================================================================
 

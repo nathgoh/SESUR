@@ -6,6 +6,7 @@ library(raster)
 library(rgdal)
 library(proxy)
 library(here)
+library(ggrepel)
 here()
 
 # Read the bioclimatic variables and the tower data
@@ -24,4 +25,6 @@ source('./Scripts/plot.R')
 source('./Scripts/tower_count_yearly.R')
 
 #=====================================================================================================
- 
+
+# Notes:
+# Wetland percantage -> use alpha to give a visual representation of the wetlands
