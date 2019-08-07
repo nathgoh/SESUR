@@ -40,3 +40,9 @@ source('./Scripts/tower_count_yearly.R')
   
   # Calculate the distance (average or total) for the world when 
   # calculated from our current network, vs all potential tower.
+
+  # Broom package
+
+  # Prettify the plots using custom themes
+
+  # Fix the hardcoded values in the R scripts for scalability 
