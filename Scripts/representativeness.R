@@ -11,14 +11,13 @@ Fw_max <- crop(Fw_max, area_of_interest)
 
 # Create mask
 bioclim_stack <- mask(bioclim_stack, Fw_max)
-# bioclim_stack <- stack(Fw_max)
 bioclim_stack_df <- as.data.frame(as(bioclim_stack, "SpatialPixelsDataFrame"))
 Fw_max_df <- as.data.frame(as(Fw_max, "SpatialPixelsDataFrame"))
 
 #===================================================================================================
 
 # Calculate eucledian distance to all other pixels of all the bioclimatic variables for each tower
-distance <- proxy::dist(x = bioclim_stack_df[c(1:11)], y = towers_coords_df[c(14:24)], method = "Euclidean",
+distance <- proxy::dist(x = bioclim_stack_df[c(1:num_bio)], y = towers_coords_df[c(14: (13 + num_bio))], method = "Euclidean",
                       diag = FALSE, upper = FALSE)
 
 # Reformat to be usable for analysis
@@ -29,18 +28,19 @@ bioclim_stack_df_wdist <- cbind(bioclim_stack_df, distance)
 #===================================================================================================
 
 # Find the minimum distance in terms of the bioclimatic variables at each pixel on Earth from the network of towers
-bioclim_stack_df_wdist$min_dist <- apply(bioclim_stack_df_wdist[, 14:57], MARGIN = 1, FUN = min, na.rm = TRUE)
+num_col = ncol(bioclim_stack_df_wdist)
+bioclim_stack_df_wdist$min_dist <- apply(bioclim_stack_df_wdist[, (num_bio + 3):num_col], MARGIN = 1, FUN = min, na.rm = TRUE)
 
 # Find the tower that has the minimum distance
-bioclim_stack_df_wdist$closest_tower <- c(apply(bioclim_stack_df_wdist[, 14:57], MARGIN = 1, FUN = which.min))
+bioclim_stack_df_wdist$closest_tower <- c(apply(bioclim_stack_df_wdist[, (num_bio + 3):num_col], MARGIN = 1, FUN = which.min))
 
 # Convert numeric to tower ID
-bioclim_stack_df_wdist$closest_tower <- colnames(bioclim_stack_df_wdist[, 14:57])[bioclim_stack_df_wdist$closest_tower]
+bioclim_stack_df_wdist$closest_tower <- colnames(bioclim_stack_df_wdist[, (num_bio + 3):num_col])[bioclim_stack_df_wdist$closest_tower]
 
 #===================================================================================================
 
 # K-means clustering
-k <- kmeans(na.omit(bioclim_stack_df[, 1:11]), centers = 10, nstart = 100)
+k <- kmeans(na.omit(bioclim_stack_df[, 1:num_bioclimatic]), centers = 10, nstart = 100)
 
 # Put into stack
 bioclim_stack_df_k <- na.omit(bioclim_stack_df)

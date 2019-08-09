@@ -16,6 +16,7 @@ source('./Scripts/read_bioclim.R')
 source('./Scripts/cumulative_plot.R')
 
 # Do representativeness analyses like eucledian distance
+num_bio = 11
 source('./Scripts/representativeness.R')
 
 # Plot our analysis of the representativeness analyses
@@ -44,5 +45,3 @@ source('./Scripts/tower_count_yearly.R')
   # Broom package
 
   # Prettify the plots using custom themes
-
-  # Fix the hardcoded values in the R scripts for scalability 
