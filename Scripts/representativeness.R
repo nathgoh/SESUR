@@ -27,6 +27,17 @@ bioclim_stack_df_wdist <- cbind(bioclim_stack_df, distance)
 
 #===================================================================================================
 
+# Calculate eucledian distance to all other pixels of all the bioclimatic variables for each tower
+distance_tower <- proxy::dist(x = towers_coords_df[c(14: (13 + num_bio))], y = towers_coords_df[c(14: (13 + num_bio))], method = "Euclidean",
+                        diag = FALSE, upper = FALSE)
+
+# Reformat to be usable for analysis
+distance_tower <- as.data.frame(as.matrix.data.frame(distance_tower))
+names(distance_tower) <- towers_coords$SITE_ID
+# towers_coords_df <- cbind(towers_coords_df, distance_tower)
+
+#===================================================================================================
+
 # Find the minimum distance in terms of the bioclimatic variables at each pixel on Earth from the network of towers
 num_col = ncol(bioclim_stack_df_wdist)
 bioclim_stack_df_wdist$min_dist <- apply(bioclim_stack_df_wdist[, (num_bio + 3):num_col], MARGIN = 1, FUN = min, na.rm = TRUE)
@@ -40,7 +51,7 @@ bioclim_stack_df_wdist$closest_tower <- colnames(bioclim_stack_df_wdist[, (num_b
 #===================================================================================================
 
 # K-means clustering
-k <- kmeans(na.omit(bioclim_stack_df[, 1:num_bioclimatic]), centers = 10, nstart = 100)
+k <- kmeans(na.omit(bioclim_stack_df[, 1:num_bio]), centers = 10, nstart = 100)
 
 # Put into stack
 bioclim_stack_df_k <- na.omit(bioclim_stack_df)

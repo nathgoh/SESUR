@@ -23,7 +23,7 @@ map_clusters <- ggplot() +
 
 # Map minimum distances
 min_distances <- ggplot() +
-  geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = min_dist, alpha = Fw_max_scaled)) +
+  geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = min_dist)) +
   geom_text(data = towers_coords_df, aes(x = LOCATION_LONG, y = LOCATION_LAT + 2, label = SITE_ID)) +
   geom_point(data = towers_coords_df, aes(x = LOCATION_LONG, y = LOCATION_LAT), shape = 21, size = 2, stroke = 1.1, color = "black")
 
