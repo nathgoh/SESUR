@@ -7,6 +7,7 @@ library(rgdal)
 library(proxy)
 library(here)
 library(ggrepel)
+library(MASS)
 here()
 
 # Read the bioclimatic variables and the tower data
@@ -43,5 +44,3 @@ source('./Scripts/tower_count_yearly.R')
   # calculated from our current network, vs all potential tower.
 
   # Broom package
-
-  # Prettify the plots using custom themes
