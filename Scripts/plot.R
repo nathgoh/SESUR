@@ -10,14 +10,15 @@ bioclim_stack_df_wdist <- bioclim_stack_df_wdist %>%
 #=====================================================================================================
 
 # Custom map theme
-source('./Scripts/custom_map_theme.R')
+source('./Scripts/custom_theme.R')
 
 # Map towers over the bioclimatic variables
 map_towers <- ggplot() +
   geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = as.factor(closest_tower))) +
-  geom_text_repel(data = towers_coords_df, aes(x = LOCATION_LONG, y =  LOCATION_LAT + 2, label = SITE_ID)) +
-  geom_point(data = towers_coords_df, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), shape = 21, size = 2, stroke = 1.1, color = "black") +
-  theme_map()
+  geom_text_repel(data = towers_coords_df, aes(x = LOCATION_LONG, y =  LOCATION_LAT + 2, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
+  geom_point(data = towers_coords_df, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), size = 1, color = "black") +
+  labs(title = "Representativeness of the Tower Network") +
+  theme_map(12)
 
 # Map clustering of regions
 map_clusters <- ggplot() +
@@ -28,8 +29,10 @@ map_clusters <- ggplot() +
 # Map minimum distances
 min_distances <- ggplot() +
   geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = min_dist)) +
-  geom_text(data = towers_coords_df, aes(x = LOCATION_LONG, y = LOCATION_LAT + 2, label = SITE_ID)) +
-  geom_point(data = towers_coords_df, aes(x = LOCATION_LONG, y = LOCATION_LAT), shape = 21, size = 2, stroke = 1.1, color = "black")
+  geom_text_repel(data = towers_coords_df, aes(x = LOCATION_LONG, y =  LOCATION_LAT + 2, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
+  geom_point(data = towers_coords_df, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1, color = "black") + 
+  labs(title = "Dissimilarity from the Network of Towers") + 
+  theme_map(12)
 
 # Histogram
 unordered_hist <- ggplot() +
@@ -51,7 +54,8 @@ bioclim_stack_df_wdist$closest_tower <- factor(bioclim_stack_df_wdist$closest_to
 ordered_hist <- ggplot() +
   geom_histogram(data = bioclim_stack_df_wdist, aes(x = closest_tower, fill = closest_tower), stat = "count") +
   coord_flip() +
-  theme(legend.position = "none") +
   xlab("Closest Tower") +
   ylab("Number of Pixels") +
-  scale_y_continuous(expand = c(0, 0))
+  scale_y_continuous(expand = c(0, 0)) + 
+  labs(title = "Count of the Representativeness of the Tower Network") +
+  theme_hist(12)
