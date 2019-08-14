@@ -17,12 +17,12 @@ Fw_max_df <- as.data.frame(as(Fw_max, "SpatialPixelsDataFrame"))
 #===================================================================================================
 
 # Calculate eucledian distance to all other pixels of all the bioclimatic variables for each tower
-distance <- proxy::dist(x = bioclim_stack_df[c(1:num_bio)], y = towers_coords_df[c(14: (13 + num_bio))], method = "Euclidean",
+distance <- proxy::dist(x = bioclim_stack_df[c(1:num_bio)], y = towers_coords_df_acquired[c(14: (13 + num_bio))], method = "Euclidean",
                       diag = FALSE, upper = FALSE)
 
 # Reformat to be usable for analysis
 distance <- as.data.frame(as.matrix.data.frame(distance))
-names(distance) <- towers_coords$SITE_ID
+names(distance) <- towers_coords_acquired$SITE_ID
 bioclim_stack_df_wdist <- cbind(bioclim_stack_df, distance)
 
 #===================================================================================================
@@ -51,7 +51,7 @@ k_raster <- SpatialPixelsDataFrame(bioclim_stack_df_k[, c('x', 'y')], data = bio
 k_raster <- raster(k_raster, layer = ncol(bioclim_stack_df_k))
 
 # Extract the cluster ID of each tower
-towers_coords_df$k <- raster::extract(k_raster, towers_coords)
+towers_coords_df_acquired$k <- raster::extract(k_raster, towers_coords_acquired)
 
 #===================================================================================================
 
