@@ -4,10 +4,10 @@
 output <- data.frame()
 
 # Loop through individual rows (one row = one unique site)
-for (row in 1:nrow(towers_coords_df)) {
+for (row in 1:nrow(towers_coords_df_acquired)) {
   
   # Temp variables
-  tower_site = towers_coords_df[row,]
+  tower_site = towers_coords_df_acquired[row,]
   tower_id = tower_site[1, 'SITE_ID']
   start_year = tower_site[1, 'FLUX_MEASUREMENTS_DATE_START']
   end_year = tower_site[1, 'FLUX_MEASUREMENTS_DATE_END']
@@ -39,14 +39,14 @@ plot_tower_count <- ggplot(tower_count_yearly) +
 output_biome <- data.frame()
 
 # Split the tower data table based on biome
-split_tower_list <- split(towers_coords_df, towers_coords_df$BIOME)
+split_tower_list <- split(towers_coords_df_acquired, towers_coords_df_acquired$BIOME)
 
 # Loop through the list
 for (l in split_tower_list) {
   for (row in 1:nrow(l)) {
     
     # Temp variables
-    tower_site = towers_coords_df[row,]
+    tower_site = towers_coords_df_acquired[row,]
     tower_id = tower_site[1, 'SITE_ID']
     start_year = tower_site[1, 'FLUX_MEASUREMENTS_DATE_START']
     end_year = tower_site[1, 'FLUX_MEASUREMENTS_DATE_END']
