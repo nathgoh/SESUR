@@ -6,7 +6,7 @@ towers <- read.csv('./Data/Towers/Sites_all_BAMS_15march2019_v2.csv', stringsAsF
 # Clean the tower data and pick out the main things we want from the dataset
 towers <- towers %>% 
   filter(IGBP %in% c("WET", "CRO - Rice")) %>%
-    # filter(Data_acquired == "yes") %>%
+    filter(Data_acquired == "yes") %>%
       filter(SITE_ID != "--*") %>%
       filter(SITE_ID != "--") %>%
       filter(SITE_ID != "--**") %>%
