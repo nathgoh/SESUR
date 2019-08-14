@@ -16,9 +16,12 @@ source('./Scripts/read_bioclim.R')
 # Draw the cumulative plot, visual representation of K-S Test
 source('./Scripts/cumulative_plot.R')
 
-# Do representativeness analyses like eucledian distance
+# Do representativeness analyses like eucledian distance on bioclimatic variables
 num_bio = 11
 source('./Scripts/representativeness.R')
+
+# Do tower specific analyses
+source('./Scripts/tower_representativeness.R')
 
 # Plot our analysis of the representativeness analyses
 source('./Scripts/plot.R')
@@ -40,7 +43,3 @@ source('./Scripts/tower_count_yearly.R')
       # Run the distance algorithm for current network towers to new towers. 
       # This would give use a priority among new towers.
   
-  # Calculate the distance (average or total) for the world when 
-  # calculated from our current network, vs all potential tower.
-
-  # Broom package
