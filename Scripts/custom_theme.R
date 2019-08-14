@@ -3,7 +3,7 @@
 # Custom map ggplot theme to make it super pretty to my own desire :)
 theme_map <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 14, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 16, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
            
@@ -32,7 +32,7 @@ theme_map <- function(base_size) {
 # Custom histogram ggplot theme
 theme_hist <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 14, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 16, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
           
