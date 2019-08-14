@@ -14,23 +14,23 @@ source('./Scripts/custom_theme.R')
 
 # Map towers over the bioclimatic variables
 map_towers <- ggplot() +
-  geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = as.factor(closest_tower))) +
-  geom_text_repel(data = towers_coords_df, aes(x = LOCATION_LONG, y =  LOCATION_LAT + 2, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
-  geom_point(data = towers_coords_df, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), size = 1, color = "black") +
+  geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = as.factor(closest_tower), alpha = Fw_max)) +
+  geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), size = 1, color = "black") +
   labs(title = "Representativeness of the Tower Network") +
   theme_map(12)
 
 # Map clustering of regions
 map_clusters <- ggplot() +
   geom_tile(data = bioclim_stack_df_k, aes(x = x, y = y, fill = as.factor(k))) +
-  geom_text(data = towers_coords_df, aes(x = LOCATION_LONG, y =  LOCATION_LAT + 2, label = SITE_ID)) +
-  geom_point(data = towers_coords_df, aes(x = LOCATION_LONG,  y = LOCATION_LAT), shape = 21, size = 2, stroke = 1.1, color = "black")
+  geom_text(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT + 2, label = SITE_ID)) +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG,  y = LOCATION_LAT), shape = 21, size = 2, stroke = 1.1, color = "black")
 
 # Map minimum distances
 min_distances <- ggplot() +
   geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = min_dist)) +
-  geom_text_repel(data = towers_coords_df, aes(x = LOCATION_LONG, y =  LOCATION_LAT + 2, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
-  geom_point(data = towers_coords_df, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1, color = "black") + 
+  geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1, color = "black") + 
   labs(title = "Dissimilarity from the Network of Towers") + 
   theme_map(12)
 
@@ -59,3 +59,12 @@ ordered_hist <- ggplot() +
   scale_y_continuous(expand = c(0, 0)) + 
   labs(title = "Count of the Representativeness of the Tower Network") +
   theme_hist(12)
+
+#===================================================================================================
+
+# mds_plot <- ggplot() +
+#   geom_point(data = towers_mds, aes(x = points, fill = points), size = 1) +
+#   scale_color_manual(values = c(towers_mds$))
+
+plot(towers_mds$points, type = "n", pch = 20, cex = 3, col = adjustcolor("black", alpha = 0.3), xlab = "X", ylab = "Y") 
+text(towers_mds$points, labels = towers_coords_df_mds$SITE_ID, cex = 0.75)
