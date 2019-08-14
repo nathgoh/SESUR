@@ -39,17 +39,32 @@ bioclim_stack_df <- bioclim_stack_df %>%
 source('./Scripts/clean_tower_data.R')
 
 # Get coordinates from the tower data
-coords <- cbind(towers$LOCATION_LONG, towers$LOCATION_LAT)
+coords_acquired <- cbind(towers_acquired$LOCATION_LONG, towers_acquired$LOCATION_LAT)
 
 # Make spatial objects
-towers_coords <- SpatialPointsDataFrame(coords, towers)
-towers_coords_df <- data.frame(towers_coords)
+towers_coords_acquired <- SpatialPointsDataFrame(coords_acquired, towers_acquired)
+towers_coords_df_acquired <- data.frame(towers_coords_acquired)
 
 # Extract pixel values at towers
-towers_coords_df <- cbind(towers_coords_df, raster::extract(bioclim_stack, towers_coords))
+towers_coords_df_acquired <- cbind(towers_coords_df_acquired, raster::extract(bioclim_stack, towers_coords_acquired))
 
 # Get rid of any NA in the biolclimatic variables
-towers_coords_df <- na.omit(towers_coords_df) 
+towers_coords_df_acquired <- na.omit(towers_coords_df_acquired)
+
+#===================================================================================================
+
+# Get coordinates from the tower data
+coords_all <- cbind(towers_all$LOCATION_LONG, towers_all$LOCATION_LAT)
+
+# Make spatial objects
+towers_coords_all <- SpatialPointsDataFrame(coords_all, towers_all)
+towers_coords_df_all <- data.frame(towers_coords_all)
+
+# Extract pixel values at towers
+towers_coords_df_all <- cbind(towers_coords_df_all, raster::extract(bioclim_stack, towers_coords_all))
+
+# Get rid of any NA in the biolclimatic variables
+towers_coords_df_all <- na.omit(towers_coords_df_all) 
 
 #===================================================================================================
 
@@ -62,7 +77,7 @@ bioclim_stack_df2 <- bioclim_stack_df %>%
   gather(key = bioclim_var, value = value, wc2.0_bio_5m_01:tmp_avgr)
 
 # Convert towers stack data from wide format to long format
-towers_coords_df2 <- towers_coords_df %>%
+towers_coords_df2_acquired <- towers_coords_df_acquired %>%
   gather(key = bioclim_var, value = value, wc2.0_bio_5m_01:tmp_avgr)
 
 
