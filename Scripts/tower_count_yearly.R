@@ -28,7 +28,7 @@ tower_count_yearly <- output %>%
     summarise(n = n())
 
 # Graph the lineplot for visual representation of tower network over time
-plot_tower_count <- ggplot(tower_count_yearly) +
+tower_count_plot <- ggplot(tower_count_yearly) +
   geom_line(aes(x = YEAR, y = n)) +
   geom_point(aes(x = YEAR, y = n), size = 1, color = "black") +
   ylab("Number of towers") +
@@ -82,7 +82,7 @@ tower_count_yearly_biome <- full_join(tower_count_yearly_biome, gap_fill, by = c
 #===================================================================================================
 
 # Graph the lineplot for visual representation of tower network over time
-plot_tower_count_biome <- ggplot(tower_count_yearly_biome) +
+tower_count_biome_plot <- ggplot(tower_count_yearly_biome) +
   geom_area(aes(x = YEAR, y = n, fill = BIOME), position = 'stack') +
   ylab("Number of towers") +
   xlab("Year") +
