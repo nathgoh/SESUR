@@ -23,4 +23,4 @@ towers_acquired <- towers_all %>%
   filter(Data_acquired == "yes")
 
 towers_acquired <- towers_acquired[, 1:10]
-towers_all <- towers_all[, 1:10]
+towers_all <- towers_all[, 1:13]
