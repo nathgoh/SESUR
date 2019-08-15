@@ -12,6 +12,9 @@ library(vegan)
 library(BBmisc)
 here()
 
+# Number of bioclimatic variables being used for analysis
+num_bio = 11
+
 # Read the bioclimatic variables and the tower data and extract the bioclimatic variables
 # from the location of the tower site
 source('./Scripts/read_bioclim.R')
@@ -24,7 +27,6 @@ source('./Scripts/cumulative_plot.R')
 # Do representativeness analyses like eucledian distance on bioclimatic variables
 # Use these results to indicate where the flux tower network is a good/bad or the most 
 # representativeness of a certain part of the world given the current network of towers 
-num_bio = 11
 source('./Scripts/representativeness.R')
 
 # Do tower specific analyses
@@ -44,8 +46,6 @@ source('./Scripts/tower_count_yearly.R')
 
 # Notes:
 
-  # Wetland percantage -> use alpha to give a visual representation of the wetlands
-  
   # Make a loop to save the KS-test scores
   
   # Uniqueness of towers within the network:
