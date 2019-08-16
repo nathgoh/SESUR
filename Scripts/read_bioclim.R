@@ -19,23 +19,22 @@ merra_list <- list.files(path = "./Data/Merra", full.names = TRUE, pattern = ".t
 # Put into a stack
 bioclim_stack <- raster::stack(bioclim_stack, raster::stack(merra_list))
 
-
 #===================================================================================================
 
-# # Normalize the bioclimatic variable
-# scaled_data <- raster::scale(bioclim_stack)
-# bioclim_stack <- scaled_data
+# Normalize the bioclimatic variable
+scaled_data <- raster::scale(bioclim_stack)
+bioclim_stack <- scaled_data
 
 # Reformat the rasters so for use with ggplot
 bioclim_stack_df <- as.data.frame(as(bioclim_stack, "SpatialPixelsDataFrame"))
 
-# Normalize the bioclimatic variables
-scaled_data <- normalize(bioclim_stack_df[, 1:num_bio], method = "range", range = c(0, 1), margin = 2L, on.constant = "quiet")
-scaled_data$x <- cbind(bioclim_stack_df$x)
-scaled_data$y <- cbind(bioclim_stack_df$y)
+# # Normalize the bioclimatic variables
+# scaled_data <- normalize(bioclim_stack_df[, 1:num_bio], method = "range", range = c(0, 1), margin = 2L, on.constant = "quiet")
+# scaled_data$x <- cbind(bioclim_stack_df$x)
+# scaled_data$y <- cbind(bioclim_stack_df$y)
 
 # Filter for NA
-bioclim_stack_df <- scaled_data %>%
+bioclim_stack_df <- bioclim_stack_df %>%
   filter(!is.na(wc2.0_bio_5m_01))
 
 #===================================================================================================
@@ -85,5 +84,4 @@ bioclim_stack_df2 <- bioclim_stack_df %>%
 towers_coords_df2_acquired <- towers_coords_df_acquired %>%
   gather(key = bioclim_var, value = value, wc2.0_bio_5m_01:tmp_avgr)
 
-
-
+#===================================================================================================
