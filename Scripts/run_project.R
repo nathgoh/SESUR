@@ -10,6 +10,7 @@ library(ggrepel)
 library(MASS)
 library(vegan)
 library(BBmisc)
+library(spatialEco)
 here()
 
 # Number of bioclimatic variables being used for analysis
@@ -18,11 +19,6 @@ num_bio = 11
 # Read the bioclimatic variables and the tower data and extract the bioclimatic variables
 # from the location of the tower site
 source('./Scripts/read_bioclim.R')
-
-# Draw the cumulative plot, visual representation of K-S Test
-# Comparison of the global biolclimatic variables against those that are obtained where the towers
-# are located
-source('./Scripts/cumulative_plot.R')
 
 # Do representativeness analyses like eucledian distance on bioclimatic variables
 # Use these results to indicate where the flux tower network is a good/bad or the most 
@@ -41,6 +37,11 @@ source('./Scripts/plot.R')
 
 # Plot the number of towers in the network over time
 source('./Scripts/tower_count_yearly.R')
+
+# Draw the cumulative plot, visual representation of K-S Test
+# Comparison of the global biolclimatic variables against those that are obtained where the towers
+# are located
+source('./Scripts/cumulative_plot.R')
 
 #=====================================================================================================
 
