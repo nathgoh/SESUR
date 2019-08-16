@@ -69,10 +69,10 @@ mds_plot <- ggplot() +
   #geom_point(data = species.scores, aes(x = NMDS1, y = NMDS2, color = "black"), alpha = 0.5) +
   
   # Add the point markers (tower sites)
-  geom_point(data = data.scores, aes(x = NMDS1, y = NMDS2, shape = as.factor(grp), color = as.factor(grp)), size = 3) + 
+  geom_point(data = data.scores, aes(x = NMDS1, y = NMDS2, shape = as.factor(grp), color = as.factor(grp)), size = 2) + 
   
   # Add the site labels (tower ID's)
-  geom_text_repel(data = data.scores, aes(x = NMDS1, y = NMDS2, label = towers_coords_df_all$SITE_ID, color = as.factor(grp)), size = 3, vjust = 0, hjust = 0) + 
+  geom_text_repel(data = data.scores, aes(x = NMDS1, y = NMDS2, label = towers_coords_df_all$SITE_ID, color = as.factor(grp)), size = 3, vjust = 0, hjust = 0, show.legend = FALSE) + 
   scale_colour_manual(values = c("No" = "red", "Yes" = "blue")) +
   coord_equal() +
   theme_mds(12)
