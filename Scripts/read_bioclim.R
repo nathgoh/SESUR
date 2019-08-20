@@ -1,6 +1,6 @@
 #===================================================================================================
 
-# Get the list of bioclimatic variables
+# Get the list of climatic variables
 bioclim_list <- list.files(path = "./Data/Bioclimatic", full.names = TRUE, pattern = ".tif")
 
 # Put into a stack
@@ -21,14 +21,18 @@ bioclim_stack <- raster::stack(bioclim_stack, raster::stack(merra_list))
 
 #===================================================================================================
 
-# Normalize the bioclimatic variable
+# Get the individual climatic variables and store it as its own separate data frame
+tmp_df <- as.data.frame(as(bioclim_stack$tmp_avgr, "SpatialPixelsDataFrame"))
+pre_df <- as.data.frame(as(bioclim_stack$pre_avg, "SpatialPixelsDataFrame"))
+
+# Normalize the climatic variable
 scaled_data <- raster::scale(bioclim_stack)
 bioclim_stack <- scaled_data
 
 # Reformat the rasters so for use with ggplot
 bioclim_stack_df <- as.data.frame(as(bioclim_stack, "SpatialPixelsDataFrame"))
 
-# # Normalize the bioclimatic variables
+# # Normalize the climatic variables
 # scaled_data <- normalize(bioclim_stack_df[, 1:num_bio], method = "range", range = c(0, 1), margin = 2L, on.constant = "quiet")
 # scaled_data$x <- cbind(bioclim_stack_df$x)
 # scaled_data$y <- cbind(bioclim_stack_df$y)
@@ -67,7 +71,7 @@ towers_coords_df_all <- data.frame(towers_coords_all)
 # Extract pixel values at towers
 towers_coords_df_all <- cbind(towers_coords_df_all, raster::extract(bioclim_stack, towers_coords_all))
 
-# Get rid of any NA in the biolclimatic variables
+# Get rid of any NA in the climatic variables
 towers_coords_df_all <- na.omit(towers_coords_df_all) 
 
 #===================================================================================================
