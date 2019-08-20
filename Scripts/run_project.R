@@ -13,14 +13,14 @@ library(BBmisc)
 library(spatialEco)
 here()
 
-# Number of bioclimatic variables being used for analysis
+# Number of climatic variables being used for analysis
 num_bio = 11
 
-# Read the bioclimatic variables and the tower data and extract the bioclimatic variables
+# Read the climatic variables and the tower data and extract the climatic variables
 # from the location of the tower site
 source('./Scripts/read_bioclim.R')
 
-# Do representativeness analyses like eucledian distance on bioclimatic variables
+# Do representativeness analyses like eucledian distance on climatic variables
 # Use these results to indicate where the flux tower network is a good/bad or the most 
 # representativeness of a certain part of the world given the current network of towers 
 source('./Scripts/representativeness.R')
@@ -39,19 +39,8 @@ source('./Scripts/plot.R')
 source('./Scripts/tower_count_yearly.R')
 
 # Draw the cumulative plot, visual representation of K-S Test
-# Comparison of the global biolclimatic variables against those that are obtained where the towers
+# Comparison of the global climatic variables against those that are obtained where the towers
 # are located
 source('./Scripts/cumulative_plot.R')
 
 #=====================================================================================================
-
-# Notes:
-
-  # Make a loop to save the KS-test scores
-  
-  # Uniqueness of towers within the network:
-      # Run the distance algorithm for tower-to-tower of the ones currently in the network 
-      # (instead of tower to pixel). This would give us a uniqueness score of our current towers.
-      # Run the distance algorithm for current network towers to new towers. 
-      # This would give use a priority among new towers.
-  
