@@ -16,7 +16,7 @@ Fw_max_df <- as.data.frame(as(Fw_max, "SpatialPixelsDataFrame"))
 
 #===================================================================================================
 
-# Calculate eucledian distance to all other pixels of all the bioclimatic variables for each tower
+# Calculate eucledian distance to all other pixels of all the climatic variables for each tower
 distance <- proxy::dist(x = bioclim_stack_df[c(1:num_bio)], y = towers_coords_df_acquired[c(14: (13 + num_bio))], method = "Euclidean",
                       diag = FALSE, upper = FALSE)
 
@@ -27,7 +27,7 @@ bioclim_stack_df_wdist <- cbind(bioclim_stack_df, distance)
 
 #===================================================================================================
 
-# Find the minimum distance in terms of the bioclimatic variables at each pixel on Earth from the network of towers
+# Find the minimum distance in terms of the climatic variables at each pixel on Earth from the network of towers
 num_col = ncol(bioclim_stack_df_wdist)
 bioclim_stack_df_wdist$min_dist <- apply(bioclim_stack_df_wdist[, (num_bio + 3):num_col], MARGIN = 1, FUN = min, na.rm = TRUE)
 

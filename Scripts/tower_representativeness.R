@@ -1,10 +1,10 @@
 #=====================================================================================================
 
-# Filter out towers in the same pixel (bioclimatically identical)
+# Filter out towers in the same pixel (climatically identical)
 towers_coords_df_all <- towers_coords_df_all %>%
   distinct(wc2.0_bio_5m_01,tmp_avgr, .keep_all = TRUE)
 
-# Get just the data of the bioclimatic variables 
+# Get just the data of the climatic variables 
 towers_coords_df_all_mds <- normalize(towers_coords_df_all[, 17: ncol(towers_coords_df_all)], method = "range", range = c(0, 1), margin = 2L, on.constant = "quiet")
 
 # Do MDS calculations
