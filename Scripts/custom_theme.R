@@ -104,7 +104,7 @@ theme_single <- function(base_size) {
           axis.ticks = element_blank(),
           
           # Legend
-          legend.title = element_blank(),
+          legend.title = element_text(size = 8, face = 'bold', hjust = 0.5),
           legend.key = element_blank(),
           legend.position= c(0.1, 0.2),
           legend.box = "vertical",
