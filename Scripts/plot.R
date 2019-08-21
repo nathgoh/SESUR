@@ -16,7 +16,7 @@ source('./Scripts/custom_theme.R')
 map_towers <- ggplot() +
   geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = as.factor(closest_tower), alpha = Fw_max)) +
   geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
-  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), size = 1, color = "black") +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), size = 1.5, color = "black") +
   labs(title = "Representativeness of the Tower Network") +
   theme_map(12)
 
@@ -29,8 +29,8 @@ map_clusters <- ggplot() +
 # Map minimum distances
 min_distances <- ggplot() +
   geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = min_dist)) +
-  geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
-  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1, color = "black") + 
+  geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2, color = "red") +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1.5, color = "red") + 
   labs(title = "Global Dissimilarity of the Tower Network") + 
   theme_map(12)
 
@@ -82,15 +82,15 @@ mds_plot <- ggplot() +
 # Plot tower sites over just one of the climatic variables (tmp_avgr) Average Temperature
 tmp_plot <- ggplot() +
   geom_tile(data = tmp_df, aes(x = x, y = y, fill = tmp_avgr)) +
-  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1, color = "red") +
-  labs(title = "Average Temperature") +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1.5, color = "red") +
+  labs(title = "Average Temperature", fill = "Celcius") +
   theme_single(12)
 
 # Plot tower sites over just one of the climatic variables (pre_avgr) Average Preciptation
 pre_plot <- ggplot() +
   geom_tile(data = pre_df, aes(x = x, y = y, fill = pre_avg)) +
-  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1, color = "red") +
-  labs(title = "Avergae Precipitation") +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1.5, color = "red") +
+  labs(title = "Average Precipitation", fill = "mm") +
   theme_single(12)
 
 #===================================================================================================
