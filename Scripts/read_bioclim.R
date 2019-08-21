@@ -21,9 +21,9 @@ bioclim_stack <- raster::stack(bioclim_stack, raster::stack(merra_list))
 
 #===================================================================================================
 
-# Get the individual climatic variables and store it as its own separate data frame
-tmp_df <- as.data.frame(as(bioclim_stack$tmp_avgr, "SpatialPixelsDataFrame"))
-pre_df <- as.data.frame(as(bioclim_stack$pre_avg, "SpatialPixelsDataFrame"))
+# Get the individual climatic variables and store it as its own separate stack
+tmp_stack <- bioclim_stack$tmp_avgr
+pre_stack <- bioclim_stack$pre_avg
 
 # Normalize the climatic variable
 scaled_data <- raster::scale(bioclim_stack)

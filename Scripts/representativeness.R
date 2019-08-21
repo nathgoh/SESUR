@@ -14,6 +14,14 @@ bioclim_stack <- mask(bioclim_stack, Fw_max)
 bioclim_stack_df <- as.data.frame(as(bioclim_stack, "SpatialPixelsDataFrame"))
 Fw_max_df <- as.data.frame(as(Fw_max, "SpatialPixelsDataFrame"))
 
+# Cropping and masking for individual climatic variables that I chose
+tmp_stack <- crop(tmp_stack, area_of_interest)
+pre_stack <- crop(pre_stack, area_of_interest)
+tmp_stack <- mask(tmp_stack, Fw_max)
+pre_stack <- mask(pre_stack, Fw_max)
+tmp_df <- as.data.frame(as(tmp_stack, "SpatialPixelsDataFrame"))
+pre_df <- as.data.frame(as(pre_stack, "SpatialPixelsDataFrame"))
+
 #===================================================================================================
 
 # Calculate eucledian distance to all other pixels of all the climatic variables for each tower
@@ -56,10 +64,14 @@ towers_coords_df_acquired$k <- raster::extract(k_raster, towers_coords_acquired)
 #===================================================================================================
 
 # Calculate p-value based on KS-test
-# ks_tests <- data.frame()
-# for_ks_t <- towers_coords_df[, 14:24]
-# for_ks_b <- bioclim_stack_df[, 1:11]
-# 
-# for (j in 1:ncol(for_ks_b)) {
-#   ks <- ks.test(for_ks_t[j], for_ks_b[, j], "pnorm")
-# }
+for_ks_t <- towers_coords_df_acquired[, 14:24]
+for_ks_b <- bioclim_stack_df[, 1:11]
+
+for (j in 1:ncol(for_ks_b)) {
+  print(names(for_ks_b[j]))
+  print(ks.test(for_ks_t[j], for_ks_b[, j], "pnorm"))
+}
+
+
+
+
