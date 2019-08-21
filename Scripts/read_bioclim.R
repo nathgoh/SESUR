@@ -25,8 +25,12 @@ bioclim_stack <- raster::stack(bioclim_stack, raster::stack(merra_list))
 tmp_stack <- bioclim_stack$tmp_avgr
 pre_stack <- bioclim_stack$pre_avg
 
-# Normalize the climatic variable
-scaled_data <- raster::scale(bioclim_stack)
+# Normalize the climatic variable between 0 and 1
+rescale01 <- function(x) {
+  (x - cellStats(x, stat = 'min')) / (cellStats(x, stat = 'max') - cellStats(x, stat = 'min'))
+}
+
+scaled_data <- rescale01(bioclim_stack)
 bioclim_stack <- scaled_data
 
 # Reformat the rasters so for use with ggplot
