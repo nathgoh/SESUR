@@ -22,6 +22,9 @@ pre_stack <- mask(pre_stack, Fw_max)
 tmp_df <- as.data.frame(as(tmp_stack, "SpatialPixelsDataFrame"))
 pre_df <- as.data.frame(as(pre_stack, "SpatialPixelsDataFrame"))
 
+# Times 12 as current dataset is average monthly precipitation
+pre_df$pre_avg <- pre_df$pre_avg * 12
+
 #===================================================================================================
 
 # Calculate eucledian distance to all other pixels of all the climatic variables for each tower
