@@ -18,6 +18,7 @@ map_towers <- ggplot() +
   geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
   geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), size = 1.5, color = "black") +
   labs(title = "Representativeness of the Tower Network") +
+  scale_fill_manual(values = tower_colors) +
   theme_map(12)
 
 # Map clustering of regions
@@ -28,7 +29,8 @@ map_clusters <- ggplot() +
 
 # Map minimum distances
 min_distances <- ggplot() +
-  geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = min_dist > 0.75)) +
+  geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = min_dist)) +
+  geom_tile(data = subset(bioclim_stack_df_wdist, min_dist > 0.5), aes(x = x, y = y), fill = "green") +
   geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2, color = "red") +
   geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1.5, color = "red") + 
   labs(title = "Global Dissimilarity of the Tower Network") + 
@@ -58,6 +60,7 @@ ordered_hist <- ggplot() +
   ylab("Number of Pixels") +
   scale_y_continuous(expand = c(0, 0)) + 
   labs(title = "Count of the Representativeness of the Tower Network") +
+  scale_fill_manual(values = tower_colors) +
   theme_hist(12)
 
 #===================================================================================================

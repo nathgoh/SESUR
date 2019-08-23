@@ -2,7 +2,7 @@
 
 # Fw = fraction wetland
 Fw_max <- raster('./Data/Wetland Map/Fw_max.tif')
-Fw_max[Fw_max < 0.01] <- NA
+Fw_max[Fw_max < 0.025] <- NA
 
 # Crop out Antartica, not relevant to the research
 area_of_interest = extent(c(xmin = -180, xmax = 180, ymin = -58, ymax = 90))
