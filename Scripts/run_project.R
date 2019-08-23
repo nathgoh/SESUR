@@ -10,7 +10,7 @@ library(ggrepel)
 library(MASS)
 library(vegan)
 library(BBmisc)
-library(spatialEco)
+# library(spatialEco)
 here()
 
 # Number of climatic variables being used for analysis

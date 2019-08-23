@@ -1,5 +1,55 @@
 #======================================================================================================================================
 
+# Add color dictionary which manually designates a color for each tower site
+tower_colors = {
+  'CA-SCB*': '#006400'
+  "DE-SfN*": "#ee82ee"
+  "DE-Zrk*":"	#008b00"
+  "FI-Lom*": "#473c8b"
+  "FI-Si2*": "#8b7765"
+  "FI-Sii*": "#8b6969"
+  "IT-Cas*": "#ee5c42"
+  "JP-BBY*": "#ffff00"
+  "JP-Mse*": "#9acd32"
+  "KR-CRK": "#40e0d0"  
+  "MY-MLM*": "#8b1a1a"
+  "NZ-Kop*": "#00ff7f"
+  "RU-Ch2*": "#ee799f"
+  "RU-Che*": "#ffbbff"
+  "RU-SAM*": "#912cee"
+  "RU-Vrk*": "#551a8b"
+  "SE-Deg*": "#ffec8b"
+  "SE-St1*": "#ffaeb9"
+  "SE-Sto*": "#000080"
+  "US-Atq*": "#fa8072"
+  "US-Beo*": "cd9b1d"
+  "US-Bes*": "#ff7f50"
+  "US-HRA*": "#cd5b45"
+  "US-HRC*": "#caff70"
+  "US-Ics*": "#6e8b3d"
+  "US-Ivo*": "#bcee68"
+  "US-LA1*": "#adff2f"
+  "US-LA2*": "#228b22"
+  "US-Los*": "#ff7f00"
+  "US-MRM*": "#8b4500"
+  "US-Myb*": "#ff1493"
+  "US-NC4*": "#8b0a50"
+  "US-NGB*": "#9932cc"
+  "US-NGC*": "#8a2be2"
+  "US-Orv*": "#0000ff"
+  "US-OWC*": "#00008b"
+  "US-Sne*": "#53868b"
+  "US-Srr*": "#528b8b"
+  "US-StJ*": "#97ffff"
+  "US-Tw1*": "#00ced1"
+  "US-Tw4*": "#1e90ff"
+  "US-Twt*": "#00bfff"
+  "US-Uaf*": "#00688b"
+  "US-WPT*": "#104e8b"
+}
+
+#======================================================================================================================================
+
 # Custom map ggplot theme to make it super pretty to my own desire :)
 theme_map <- function(base_size) {
   theme_bw(base_size = base_size) +
