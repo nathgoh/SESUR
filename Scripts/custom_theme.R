@@ -11,7 +11,7 @@ tower_colors = {
   "IT-Cas*": "#ee5c42"
   "JP-BBY*": "#ffff00"
   "JP-Mse*": "#9acd32"
-  "KR-CRK": "#40e0d0"  
+  "KR-CRK": "#40e0d0"
   "MY-MLM*": "#8b1a1a"
   "NZ-Kop*": "#00ff7f"
   "RU-Ch2*": "#ee799f"
