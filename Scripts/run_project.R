@@ -10,7 +10,8 @@ library(ggrepel)
 library(MASS)
 library(vegan)
 library(BBmisc)
-library(spatialEco)
+library(rworldmap)
+library(RColorBrewer)
 here()
 
 # Number of climatic variables being used for analysis
@@ -33,6 +34,8 @@ source('./Scripts/representativeness.R')
 source('./Scripts/tower_representativeness.R')
 
 # Plot our analysis of the representativeness analyses
+# All plots will be automatically saved when this script is running
+# Plots will be saved in /SESUR/Outputs
 source('./Scripts/plot.R')
 
 # Plot the number of towers in the network over time
