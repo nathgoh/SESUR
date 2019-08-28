@@ -2,49 +2,50 @@
 
 # Add color dictionary which manually designates a color for each tower site
 tower_colors = list(
-  'CA-SCB*'= '#006400',
-  "DE-SfN*"= "#ee82ee",
-  "DE-Zrk*"=  "#008b00",
-  "FI-Lom*"= "#473c8b",
-  "FI-Si2*"= "#8b7765",
+  'CA-SCB*'= '#000066',
+  "MY-MLM*"= "#00ff99",
+  "US-LA1*"= "#00ffff",
+  "US-Los*"= "#0000ff",
+  "US-Myb*"= "#464646",
+  
+  "DE-SfN*"= "#6600cc",
+  "DE-Zrk*"= "#ff8000",
+  "FI-Lom*"= "#00e600",
+  "FI-Si2*"= "#ff00aa",
   "FI-Sii*"= "#8b6969",
-  "IT-Cas*"= "#ee5c42",
-  "JP-BBY*"= "#ffff00",
-  "JP-Mse*"= "#9acd32",
-  "KR-CRK"= "#40e0d0",
-  "MY-MLM*"= "#8b1a1a",
-  "NZ-Kop*"= "#00ff7f",
-  "RU-Ch2*"= "#ee799f",
-  "RU-Che*"= "#ffbbff",
-  "RU-SAM*"= "#912cee",
-  "RU-Vrk*"= "#551a8b",
-  "SE-Deg*"= "#ffec8b",
-  "SE-St1*"= "#ffaeb9",
+  "IT-Cas*"= "#ff33ff",
+  "JP-BBY*"= "#b30000",
+  "JP-Mse*"= "#660066",
+  "KR-CRK"= "#cc6600",
+  "NZ-Kop*"= "#ff00ff",
+  "RU-Ch2*"= "#cc00cc",
+  "RU-Che*"= "#b366ff",
+  "RU-SAM*"= "#ff33bb",
+  "RU-Vrk*"= "#994d00",
+  "SE-Deg*"= "#00b300",
+  "SE-St1*"= "#008000",
   "SE-Sto*"= "#000080",
-  "US-Atq*"= "#fa8072",
-  "US-Beo*"= "#cd9b1d",
+  "US-Atq*"= "#ff9933",
+  "US-Beo*"= "#800000",
   "US-Bes*"= "#ff7f50",
-  "US-HRA*"= "#cd5b45",
+  "US-HRA*"= "#ffff00",
   "US-HRC*"= "#caff70",
-  "US-Ics*"= "#6e8b3d",
-  "US-Ivo*"= "#bcee68",
-  "US-LA1*"= "#adff2f",
+  "US-Ics*"= "#8c1aff",
+  "US-Ivo*"= "#1aff1a",
   "US-LA2*"= "#228b22",
-  "US-Los*"= "#ff7f00",
-  "US-MRM*"= "#8b4500",
-  "US-Myb*"= "#ff1493",
-  "US-NC4*"= "#8b0a50",
+  "US-MRM*"= "#990099",
+  "US-NC4*"= "#e60000",
   "US-NGB*"= "#9932cc",
-  "US-NGC*"= "#8a2be2",
-  "US-Orv*"= "#0000ff",
-  "US-OWC*"= "#00008b",
+  "US-NGC*"= "#004d00",
+  "US-Orv*"= "#ff1a1a",
+  "US-OWC*"= "#663300",
   "US-Sne*"= "#53868b",
-  "US-Srr*"= "#528b8b",
-  "US-StJ*"= "#97ffff",
+  "US-Srr*"= "#cccc00",
+  "US-StJ*"= "#cc00cc",
   "US-Tw1*"= "#00ced1",
   "US-Tw4*"= "#1e90ff",
   "US-Twt*"= "#00bfff",
-  "US-Uaf*"= "#00688b",
+  "US-Uaf*"= "#ff4d4d",
   "US-WPT*"= "#104e8b")
 
 
@@ -53,7 +54,7 @@ tower_colors = list(
 # Custom map ggplot theme to make it super pretty to my own desire
 theme_map <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 26, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 40, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
            
@@ -70,11 +71,11 @@ theme_map <- function(base_size) {
           # Legend
           legend.title = element_blank(),
           legend.key = element_blank(),
-          legend.position= c(0.15, 0.2),
+          legend.position= c(0.15, 0.25),
           legend.box = "horizontal",
-          legend.text = element_text(size = 16),
-          legend.spacing = unit(0, "mm"),
-          legend.key.size = unit(5, "mm"),
+          legend.text = element_text(size = 28),
+          legend.spacing = unit(12, "mm"),
+          legend.key.size = unit(15, "mm"),
           legend.box.background = element_rect(color = "black"),
           legend.background = element_blank())
 }
@@ -84,7 +85,7 @@ theme_map <- function(base_size) {
 # Custom histogram ggplot theme
 theme_hist <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 26, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 40, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
           
@@ -94,7 +95,7 @@ theme_hist <- function(base_size) {
           panel.background = element_rect(fill = '#F5F5F5'),
           
           # Axis
-          axis.title = element_text(size = 16, face = 'bold'),
+          axis.title = element_text(size = 28, face = 'bold'),
           
           # Legend
           legend.position = 'none')
@@ -105,7 +106,7 @@ theme_hist <- function(base_size) {
 # Custom MDS ggplot theme
 theme_mds <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 26, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 40, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
           
@@ -118,15 +119,15 @@ theme_mds <- function(base_size) {
           axis.text.x = element_blank(),  
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(),  
-          axis.title.x = element_text(size=16), 
-          axis.title.y = element_text(size=16),
+          axis.title.x = element_text(size=28), 
+          axis.title.y = element_text(size=28),
           
           # Legend
           legend.title = element_blank(),
           legend.key = element_blank(),
           legend.position= c(0.07, 0.07),
           legend.box = "vertical",
-          legend.text = element_text(size = 16),
+          legend.text = element_text(size = 28),
           legend.spacing = unit(0, "mm"),
           legend.key.size = unit(5, "mm"),
           legend.box.background = element_rect(color = "black"),
@@ -139,7 +140,7 @@ theme_mds <- function(base_size) {
 # Custom single climatic ggplot theme
 theme_single <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 26, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 56, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
           
@@ -154,13 +155,13 @@ theme_single <- function(base_size) {
           axis.ticks = element_blank(),
           
           # Legend
-          legend.title = element_text(size = 16, face = 'bold', hjust = 0.5),
+          legend.title = element_text(size = 36, face = 'bold', hjust = 0.5),
           legend.key = element_blank(),
           legend.position= c(0.1, 0.2),
           legend.box = "vertical",
-          legend.text = element_text(size = 16),
-          legend.spacing = unit(0, "mm"),
-          legend.key.size = unit(5, "mm"),
+          legend.text = element_text(size = 36),
+          legend.spacing = unit(10, "mm"),
+          legend.key.size = unit(15, "mm"),
           legend.box.background = element_rect(color = "black"),
           legend.background = element_blank())
 }
