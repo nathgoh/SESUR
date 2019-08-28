@@ -12,11 +12,16 @@ bioclim_stack_df_wdist <- bioclim_stack_df_wdist %>%
 # Custom map theme
 source('./Scripts/custom_theme.R')
 
+# Make an outline of the countries for the plot
+data(coastsCoarse)
+map_outline_df <- fortify(coastsCoarse)
+
 # Map towers over the climatic variables
 map_towers <- ggplot() +
   geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = as.factor(closest_tower), alpha = Fw_max)) +
-  geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2) +
-  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), size = 1.5, color = "black") +
+  geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.5, size = 12) +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG,  y =  LOCATION_LAT), size = 3.5, color = "black") +
+  geom_path(data = map_outline_df, aes(long, lat, group = group), color = 'grey20', size = 1) +
   labs(title = "Representativeness of the Tower Network") +
   scale_fill_manual(values = tower_colors) +
   theme_map(12)
@@ -30,9 +35,10 @@ map_clusters <- ggplot() +
 # Map minimum distances
 min_distances <- ggplot() +
   geom_tile(data = bioclim_stack_df_wdist, aes(x = x, y = y, fill = min_dist)) +
-  geom_tile(data = subset(bioclim_stack_df_wdist, min_dist > 0.5), aes(x = x, y = y), fill = "green") +
-  geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2, color = "red") +
-  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1.5, color = "red") + 
+  geom_tile(data = subset(bioclim_stack_df_wdist, min_dist > 0.5), aes(x = x, y = y), fill = "#00e600") +
+  geom_text_repel(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y =  LOCATION_LAT, label = SITE_ID), point.padding = NA, arrow = arrow(angle = 45, length = unit(1.25, 'mm'), ends = "last", type = "open"), segment.size = 0.2, color = "red", size = 12) +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 3.5, color = "red") + 
+  geom_path(data = map_outline_df, aes(long, lat, group = group), color = 'grey20', size = 1) +
   labs(title = "Global Dissimilarity of the Tower Network") + 
   theme_map(12)
 
@@ -85,22 +91,32 @@ mds_plot <- ggplot() +
 # Plot tower sites over just one of the climatic variables (tmp_avgr) Average Temperature
 tmp_plot <- ggplot() +
   geom_tile(data = tmp_df, aes(x = x, y = y, fill = tmp_avgr)) +
-  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1.5, color = "red") +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 4, color = "red") +
+  scale_color_gradient(low = "yellow", high = "red") +
   labs(title = "Average Temperature", fill = "Celcius") +
   theme_single(12)
 
 # Plot tower sites over just one of the climatic variables (pre_avgr) Average Preciptation
 pre_plot <- ggplot() +
   geom_tile(data = pre_df, aes(x = x, y = y, fill = pre_avg)) +
-  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 1.5, color = "red") +
+  geom_point(data = towers_coords_df_acquired, aes(x = LOCATION_LONG, y = LOCATION_LAT), size = 4, color = "red") +
   labs(title = "Average Precipitation", fill = "mm") +
   theme_single(12)
 
 #===================================================================================================
 
-# mds_plot <- ggplot() +
-#   geom_point(data = towers_mds, aes(x = points, fill = points), size = 1) +
-#   scale_color_manual(values = c(towers_mds$))
-# 
-# plot(towers_mds$points, type = "n", pch = 20, cex = 3, col = adjustcolor("black", alpha = 0.3), xlab = "X", ylab = "Y") 
-# text(towers_mds$points, labels = towers_coords_df_mds$SITE_ID, cex = 0.75)
+# Save settings for the single climatic variable maps
+ggsave(plot = tmp_plot, file = "tmp_plot.png", path = "../SESUR/Outputs", width = 800, height = 600, dpi = 600, units = "mm")
+ggsave(plot = pre_plot, file = "pre_plot.png", path = "../SESUR/Outputs", width = 800, height = 600, dpi = 600, units = "mm")
+
+# Save settings for the all the climatic variable maps
+ggsave(plot = map_towers, file = "map_towers.png", path = "../SESUR/Outputs", width = 1100, height = 600, dpi = 600, units = "mm")
+ggsave(plot = min_distances, file = "min_distances.png", path = "../SESUR/Outputs", width = 1100, height = 600, dpi = 600, units = "mm")
+
+#Save settings for the MDS plot
+
+
+
+
+
+
