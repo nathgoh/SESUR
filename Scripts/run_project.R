@@ -41,9 +41,4 @@ source('./Scripts/plot.R')
 # Plot the number of towers in the network over time
 source('./Scripts/tower_count_yearly.R')
 
-# Draw the cumulative plot, visual representation of K-S Test
-# Comparison of the global climatic variables against those that are obtained where the towers
-# are located
-source('./Scripts/cumulative_plot.R')
-
 #=====================================================================================================

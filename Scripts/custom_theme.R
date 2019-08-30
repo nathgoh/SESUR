@@ -2,12 +2,11 @@
 
 # Add color dictionary which manually designates a color for each tower site
 tower_colors = list(
-  'CA-SCB*'= '#000066',
-  "MY-MLM*"= "#00ff99",
+  'CA-SCB*'= '#00ff99',
+  "MY-MLM*"= "#000066",
   "US-LA1*"= "#00ffff",
   "US-Los*"= "#0000ff",
   "US-Myb*"= "#464646",
-  
   "DE-SfN*"= "#6600cc",
   "DE-Zrk*"= "#ff8000",
   "FI-Lom*"= "#00e600",
@@ -54,7 +53,7 @@ tower_colors = list(
 # Custom map ggplot theme to make it super pretty to my own desire
 theme_map <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 40, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 56, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
            
@@ -73,9 +72,9 @@ theme_map <- function(base_size) {
           legend.key = element_blank(),
           legend.position= c(0.15, 0.25),
           legend.box = "horizontal",
-          legend.text = element_text(size = 28),
+          legend.text = element_text(size = 36),
           legend.spacing = unit(12, "mm"),
-          legend.key.size = unit(15, "mm"),
+          legend.key.size = unit(16, "mm"),
           legend.box.background = element_rect(color = "black"),
           legend.background = element_blank())
 }
@@ -85,7 +84,7 @@ theme_map <- function(base_size) {
 # Custom histogram ggplot theme
 theme_hist <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 40, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 56, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
           
@@ -95,7 +94,8 @@ theme_hist <- function(base_size) {
           panel.background = element_rect(fill = '#F5F5F5'),
           
           # Axis
-          axis.title = element_text(size = 28, face = 'bold'),
+          axis.title = element_text(size = 40, face = 'bold'),
+          axis.text = element_text(size = 36),
           
           # Legend
           legend.position = 'none')
@@ -106,7 +106,7 @@ theme_hist <- function(base_size) {
 # Custom MDS ggplot theme
 theme_mds <- function(base_size) {
   theme_bw(base_size = base_size) +
-    theme(plot.title = element_text(face = 'bold', size = 40, hjust = 0.5),
+    theme(plot.title = element_text(face = 'bold', size = 56, hjust = 0.5),
           plot.background = element_rect(fill = 'white'),
           plot.margin = margin(5, 5, 5, 5, "mm"),
           
@@ -119,17 +119,17 @@ theme_mds <- function(base_size) {
           axis.text.x = element_blank(),  
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(),  
-          axis.title.x = element_text(size=28), 
-          axis.title.y = element_text(size=28),
+          axis.title.x = element_text(size=36, face = 'bold'), 
+          axis.title.y = element_text(size=36, face = 'bold'),
           
           # Legend
           legend.title = element_blank(),
           legend.key = element_blank(),
-          legend.position= c(0.07, 0.07),
+          legend.position= c(0.09, 0.09),
           legend.box = "vertical",
-          legend.text = element_text(size = 28),
-          legend.spacing = unit(0, "mm"),
-          legend.key.size = unit(5, "mm"),
+          legend.text = element_text(size = 36),
+          legend.spacing = unit(8, "mm"),
+          legend.key.size = unit(18, "mm"),
           legend.box.background = element_rect(color = "black"),
           legend.background = element_blank())
 
@@ -164,4 +164,19 @@ theme_single <- function(base_size) {
           legend.key.size = unit(15, "mm"),
           legend.box.background = element_rect(color = "black"),
           legend.background = element_blank())
+}
+
+#==================================================================================================
+
+# Custom KS-Test ggplot theme
+theme_ks <- function(base_size) {
+  theme_bw(base_size = base_size) +
+    theme(plot.title = element_text(face = 'bold', size = 56, hjust = 0.5),
+          plot.background = element_rect(fill = 'white'),
+          plot.margin = margin(5, 5, 5, 5, "mm"),
+          
+          # Panel
+          panel.grid.minor = element_line(color = '#D0D0D0'),
+          panel.grid.major = element_line(color = '#D0D0D0'),
+          panel.background = element_rect(fill = '#F5F5F5'))
 }
