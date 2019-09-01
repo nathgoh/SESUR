@@ -60,7 +60,7 @@ theme_map <- function(base_size) {
           # Panel
           panel.grid.minor = element_line(color = '#D0D0D0'),
           panel.grid.major = element_line(color = '#D0D0D0'),
-          panel.background = element_rect(fill = '#F5F5F5'),
+          panel.background = element_rect(fill = '#F5F5F5', size = 2),
 
           # Axis
           axis.text = element_blank(),
@@ -71,11 +71,12 @@ theme_map <- function(base_size) {
           legend.title = element_blank(),
           legend.key = element_blank(),
           legend.position= c(0.15, 0.25),
-          legend.box = "horizontal",
+          legend.box = "vertical",
           legend.text = element_text(size = 36),
-          legend.spacing = unit(12, "mm"),
-          legend.key.size = unit(16, "mm"),
-          legend.box.background = element_rect(color = "black"),
+          legend.box.spacing = unit(20, 'mm'),
+          legend.spacing = unit(24, "mm"),
+          legend.key.size = unit(20, "mm"),
+          legend.box.background = element_rect(color = "black", size = 1.25),
           legend.background = element_blank())
 }
 
@@ -91,7 +92,7 @@ theme_hist <- function(base_size) {
           # Panel
           panel.grid.minor = element_line(color = '#D0D0D0'),
           panel.grid.major = element_line(color = '#D0D0D0'),
-          panel.background = element_rect(fill = '#F5F5F5'),
+          panel.background = element_rect(fill = '#F5F5F5', size = 2),
           
           # Axis
           axis.title = element_text(size = 40, face = 'bold'),
@@ -113,7 +114,7 @@ theme_mds <- function(base_size) {
           # Panel
           panel.grid.minor = element_line(color = '#D0D0D0'),
           panel.grid.major = element_line(color = '#D0D0D0'),
-          panel.background = element_rect(fill = '#F5F5F5'),
+          panel.background = element_rect(fill = '#F5F5F5', size = 2),
           
           # Axis
           axis.text.x = element_blank(),  
@@ -128,9 +129,9 @@ theme_mds <- function(base_size) {
           legend.position= c(0.09, 0.09),
           legend.box = "vertical",
           legend.text = element_text(size = 36),
-          legend.spacing = unit(8, "mm"),
+          legend.spacing = unit(12, "mm"),
           legend.key.size = unit(18, "mm"),
-          legend.box.background = element_rect(color = "black"),
+          legend.box.background = element_rect(color = "black", size = 1.25),
           legend.background = element_blank())
 
 }
@@ -147,7 +148,7 @@ theme_single <- function(base_size) {
           # Panel
           panel.grid.minor = element_line(color = '#D0D0D0'),
           panel.grid.major = element_line(color = '#D0D0D0'),
-          panel.background = element_rect(fill = '#F5F5F5'),
+          panel.background = element_rect(fill = '#F5F5F5', size = 2),
           
           # Axis
           axis.text = element_blank(),
@@ -160,9 +161,10 @@ theme_single <- function(base_size) {
           legend.position= c(0.1, 0.2),
           legend.box = "vertical",
           legend.text = element_text(size = 36),
-          legend.spacing = unit(10, "mm"),
-          legend.key.size = unit(15, "mm"),
-          legend.box.background = element_rect(color = "black"),
+          legend.spacing = unit(20, "mm"),
+          legend.key.size = unit(20, "mm"),
+          legend.box.margin = margin(5, 5, 5, 5, 'mm'),
+          legend.box.background = element_rect(color = "black", size = 1.25),
           legend.background = element_blank())
 }
 
@@ -178,5 +180,5 @@ theme_ks <- function(base_size) {
           # Panel
           panel.grid.minor = element_line(color = '#D0D0D0'),
           panel.grid.major = element_line(color = '#D0D0D0'),
-          panel.background = element_rect(fill = '#F5F5F5'))
+          panel.background = element_rect(fill = '#F5F5F5', size = 2))
 }
