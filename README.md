@@ -9,5 +9,5 @@ using R.
 Analyzing the coverage of a global network of flux towers to estimate methane emissions from wetlands.
 ```
 ```
-![Research Poster](https://github.com/nathgoh/SESUR/blob/master/Research%20Poster%20-%20SESUR.jpg)
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ```
