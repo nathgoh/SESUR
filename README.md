@@ -8,6 +8,4 @@ Develop and apply geostatistical methods that assess the representativeness of t
 using R.
 Analyzing the coverage of a global network of flux towers to estimate methane emissions from wetlands.
 ```
-```
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
-```
