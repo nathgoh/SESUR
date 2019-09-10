@@ -10,7 +10,7 @@ Analyzing the coverage of a global network of flux towers to estimate methane em
 ```
 ![Research Poster](https://github.com/nathgoh/SESUR/blob/master/Research%20Poster%20-%20SESUR.jpg)
 
-### License
+## License
 ```
 Copyright [2019] [Nathaniel Goenawan]
 
