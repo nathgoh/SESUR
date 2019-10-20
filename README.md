@@ -3,10 +3,14 @@
 ### Faculty Advisor: Rob Jackson
 ### Post-Docs Advisors: Gavin McNicol & Etienne Fluet-Chouinard
 ```
-Project on analyzing the global coverage of methane flux towers to assess how representativeness is the network to the world's climatic conditions. 
-Develop and apply geostatistical methods that assess the representativeness of the network of flux towers 
-using R.
-Analyzing the coverage of a global network of flux towers to estimate methane emissions from wetlands.
+Project on analyzing the global coverage of methane flux towers to assess how 
+representativeness is the network to the world's climatic conditions. 
+
+Develop and apply geostatistical methods that assess the representativeness of the 
+network of flux towers using R.
+
+Analyzing the coverage of a global network of flux towers to estimate
+methane emissions from wetlands.
 ```
 ![Research Poster](https://github.com/nathgoh/SESUR/blob/master/Research%20Poster%20-%20SESUR.jpg)
 
